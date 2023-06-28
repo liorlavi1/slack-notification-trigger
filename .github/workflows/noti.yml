@@ -16,7 +16,6 @@ jobs:
               curl -X POST https://api.github.com/repos/liorlavi1/demo-github-action-trigger/actions/workflows/pull.yml/dispatches \
               -H 'Accept: application/vnd.github.v3+json' \
               --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
-              --data '{"ref": "${{ github.ref }}" -d '{"title":"Testing pull request","body":"Please pull these awesome changes in!","head":"${{ github.event.inputs.source }}","base":"${{ github.event.inputs.destination }}"}}'
            
 
 #   Slack:
