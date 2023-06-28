@@ -1,32 +1,56 @@
-name: trigger pull from another repo
-on:
- workflow_dispatch:
+# name: trigger pull from another repo
+# on:
+#  workflow_dispatch:
     
+
+# jobs:
+
+#   trigger:
+    
+#     runs-on: ubuntu-latest
+
+
+#     steps:
+#         - name: trigger another workflow
+#           run: |
+#               curl -X POST https://api.github.com/repos/liorlavi1/demo-github-action-trigger/actions/workflows/pull.yml/dispatches \
+#               -H 'Accept: application/vnd.github.v3+json' \
+#               --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
+#               --data '{"ref": "${{ github.ref }}" -d '{"title":"Testing pull request","body":"Please pull these awesome changes in!","head":"${{ github.event.inputs.source }}","base":"${{ github.event.inputs.destination }}"}}, '
+           
+
+#   Slack:
+#     runs-on: ubuntu-latest
+#     steps:
+#         - name: Slack Notify
+#           uses: rtCamp/action-slack-notify@v2.0.1
+#           env:
+#             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#             SLACK_CHANNEL: devops-december-2022
+#             SLACK_TITLE: Build Success
+#             SLACK_COLOR: '#43a047'
+#             SLACK_MESSAGE: ${{ github.repository }} Build Success
+#             SLACK_USERNAME: ${{ github.repository }}
+
+name: Parent Workflow
+
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-
-  trigger:
-    
-    runs-on: ubuntu-latest
-
-
-    steps:
-        - name: trigger another workflow
-          run: |
-              curl -X POST https://api.github.com/repos/liorlavi1/demo-github-action-trigger/actions/workflows/pull.yml/dispatches \
-              -H 'Accept: application/vnd.github.v3+json' \
-              --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
-              --data '{"ref": "${{ github.ref }}"}'
-
-  Slack:
+  trigger-child-workflow:
     runs-on: ubuntu-latest
     steps:
-        - name: Slack Notify
-          uses: rtCamp/action-slack-notify@v2.0.1
-          env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-            SLACK_CHANNEL: devops-december-2022
-            SLACK_TITLE: Build Success
-            SLACK_COLOR: '#43a047'
-            SLACK_MESSAGE: ${{ github.repository }} Build Success
-            SLACK_USERNAME: ${{ github.repository }}
+      - name: Trigger Child Workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }} # Personal Access Token with appropriate permissions
+          repository: liorlavi1/demo-github-action-trigger # Replace with the owner and repository name where the child workflow should be triggered
+          event-type: trigger-my-child-workflow
+          parameters: |
+            {
+              "param1": "source",
+              "param2": "destination"
+            }
