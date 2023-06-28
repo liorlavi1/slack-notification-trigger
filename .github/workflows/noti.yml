@@ -18,20 +18,7 @@
 #               --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
            
 
-#   Slack:
-#     runs-on: ubuntu-latest
-#     steps:
-#         - name: Slack Notify
-#           uses: rtCamp/action-slack-notify@v2.0.1
-#           env:
-#             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-#             SLACK_CHANNEL: devops-december-2022
-#             SLACK_TITLE: Build Success
-#             SLACK_COLOR: '#43a047'
-#             SLACK_MESSAGE: ${{ github.repository }} Build Success
-#             SLACK_USERNAME: ${{ github.repository }}
-
-# name: Parent Workflow
+name: Parent Workflow
 
 on:
   workflow_dispatch:
@@ -47,3 +34,16 @@ jobs:
           repository: liorlavi1/demo-github-action-trigger # Replace with the owner and repository name where the child workflow should be triggered
           event-type: trigger
           client-payload: '{"source": "test", "destination": "develop"}'
+
+  Slack:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Slack Notify
+          uses: rtCamp/action-slack-notify@v2.0.1
+          env:
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_CHANNEL: room1
+            SLACK_TITLE: Build Success
+            SLACK_COLOR: '#43a047'
+            SLACK_MESSAGE: ${{ github.repository }} Build Success
+            SLACK_USERNAME: ${{ github.repository }}
