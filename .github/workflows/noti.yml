@@ -44,7 +44,7 @@ jobs:
       - name: Trigger Child Workflow
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }} # Personal Access Token with appropriate permissions
+          token: ${{ secrets.REPO_ACCESS_KEY }} # Personal Access Token with appropriate permissions
           repository: liorlavi1/demo-github-action-trigger # Replace with the owner and repository name where the child workflow should be triggered
           event-type: trigger-my-child-workflow
           parameters: |
