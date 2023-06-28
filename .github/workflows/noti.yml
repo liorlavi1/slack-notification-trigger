@@ -1,24 +1,4 @@
-# name: trigger pull from another repo
-# on:
-#  workflow_dispatch:
-    
-
-# jobs:
-
-#   trigger:
-    
-#     runs-on: ubuntu-latest
-
-
-#     steps:
-#         - name: trigger another workflow
-#           run: |
-#               curl -X POST https://api.github.com/repos/liorlavi1/demo-github-action-trigger/actions/workflows/pull.yml/dispatches \
-#               -H 'Accept: application/vnd.github.v3+json' \
-#               --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
-           
-
-name: Parent Workflow
+name: Trigger workflow
 
 on:
   workflow_dispatch:
@@ -27,7 +7,7 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Child Workflow
+      - name: Trigger workflow
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_KEY }} # Personal Access Token with appropriate permissions
