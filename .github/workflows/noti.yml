@@ -1,22 +1,22 @@
-# name: trigger pull from another repo
-# on:
-#  workflow_dispatch:
+name: trigger pull from another repo
+on:
+ workflow_dispatch:
     
 
-# jobs:
+jobs:
 
-#   trigger:
+  trigger:
     
-#     runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
 
-#     steps:
-#         - name: trigger another workflow
-#           run: |
-#               curl -X POST https://api.github.com/repos/liorlavi1/demo-github-action-trigger/actions/workflows/pull.yml/dispatches \
-#               -H 'Accept: application/vnd.github.v3+json' \
-#               --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
-#               --data '{"ref": "${{ github.ref }}" -d '{"title":"Testing pull request","body":"Please pull these awesome changes in!","head":"${{ github.event.inputs.source }}","base":"${{ github.event.inputs.destination }}"}}, '
+    steps:
+        - name: trigger another workflow
+          run: |
+              curl -X POST https://api.github.com/repos/liorlavi1/demo-github-action-trigger/actions/workflows/pull.yml/dispatches \
+              -H 'Accept: application/vnd.github.v3+json' \
+              --header 'Authorization: Bearer ${{ secrets.REPO_ACCESS_KEY }}' \
+              --data '{"ref": "${{ github.ref }}" -d '{"title":"Testing pull request","body":"Please pull these awesome changes in!","head":"${{ github.event.inputs.source }}","base":"${{ github.event.inputs.destination }}"}}, '
            
 
 #   Slack:
@@ -32,19 +32,19 @@
 #             SLACK_MESSAGE: ${{ github.repository }} Build Success
 #             SLACK_USERNAME: ${{ github.repository }}
 
-name: Parent Workflow
+# name: Parent Workflow
 
-on:
-  workflow_dispatch:
+# on:
+#   workflow_dispatch:
 
-jobs:
-  trigger-child-workflow:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Child Workflow
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.REPO_ACCESS_KEY }} # Personal Access Token with appropriate permissions
-          repository: liorlavi1/demo-github-action-trigger # Replace with the owner and repository name where the child workflow should be triggered
-          event-type: trigger-my-child-workflow
-          client-payload: '{"source": "test", "destination": "develop"}'
+# jobs:
+#   trigger-child-workflow:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Trigger Child Workflow
+#         uses: peter-evans/repository-dispatch@v1
+#         with:
+#           token: ${{ secrets.REPO_ACCESS_KEY }} # Personal Access Token with appropriate permissions
+#           repository: liorlavi1/demo-github-action-trigger # Replace with the owner and repository name where the child workflow should be triggered
+#           event-type: trigger-my-child-workflow
+#           client-payload: '{"source": "test", "destination": "develop"}'
