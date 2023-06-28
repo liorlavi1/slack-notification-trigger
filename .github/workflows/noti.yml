@@ -1,7 +1,6 @@
 name: trigger pull from another repo
 on:
-  
-  push:
+ workflow_dispatch:
     
 
 jobs:
