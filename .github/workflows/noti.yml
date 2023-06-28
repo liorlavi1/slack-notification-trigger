@@ -47,8 +47,4 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_KEY }} # Personal Access Token with appropriate permissions
           repository: liorlavi1/demo-github-action-trigger # Replace with the owner and repository name where the child workflow should be triggered
           event-type: trigger-my-child-workflow
-          parameters: |
-            {
-              "head": "test",
-              "base": "develop"
-            }
+          client-payload: '{"source": "test", "destination": "develop"}'
