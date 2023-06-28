@@ -49,6 +49,6 @@ jobs:
           event-type: trigger-my-child-workflow
           parameters: |
             {
-              "param1": "source",
-              "param2": "destination"
+              "source": "develop",
+              "destination": "test"
             }
