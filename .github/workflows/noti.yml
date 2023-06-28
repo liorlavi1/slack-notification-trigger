@@ -35,9 +35,7 @@
 name: Parent Workflow
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   trigger-child-workflow:
